@@ -27,9 +27,6 @@ export default class Task extends Model {
       id_responsible: {
         type: Sequelize.INTEGER,
         defaultValue: '',
-        validate:{
-          msg: 'Responsible does not exist',
-        },
       },
       id_category: {
         type: Sequelize.INTEGER,

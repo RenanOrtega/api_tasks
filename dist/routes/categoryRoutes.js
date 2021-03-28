@@ -4,10 +4,10 @@ var _loginRequired = require('../middlewares/loginRequired'); var _loginRequired
 
 const router = new (0, _express.Router)();
 
-router.get('/', _CategoryController2.default.index);
-router.get('/:id', _CategoryController2.default.show);
-router.post('/', _CategoryController2.default.store);
-router.put('/:id', _CategoryController2.default.update);
-router.delete('/:id', _CategoryController2.default.delete);
+router.get('/', _loginRequired2.default, _CategoryController2.default.index);
+router.get('/:id', _loginRequired2.default, _CategoryController2.default.show);
+router.post('/', _loginRequired2.default, _CategoryController2.default.store);
+router.put('/:id', _loginRequired2.default, _CategoryController2.default.update);
+router.delete('/:id', _loginRequired2.default, _CategoryController2.default.delete);
 
 exports. default = router;

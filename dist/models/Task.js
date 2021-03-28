@@ -27,9 +27,6 @@
       id_responsible: {
         type: _sequelize2.default.INTEGER,
         defaultValue: '',
-        validate:{
-          msg: 'Responsible does not exist',
-        },
       },
       id_category: {
         type: _sequelize2.default.INTEGER,

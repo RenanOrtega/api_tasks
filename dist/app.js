@@ -15,12 +15,12 @@ var _responsibleRoutes = require('./routes/responsibleRoutes'); var _responsible
 var _situationRoutes = require('./routes/situationRoutes'); var _situationRoutes2 = _interopRequireDefault(_situationRoutes);
 var _categoryRoutes = require('./routes/categoryRoutes'); var _categoryRoutes2 = _interopRequireDefault(_categoryRoutes);
 
-const whiteList = [
+/*const whiteList = [
   'http://localhost:3000',
   'http://localhost:3001',
 ];
 
-/*const corsOptions = {
+const corsOptions = {
   origin: function(origin, callback){
     if(whiteList.indexOf(origin) !== -1 || !origin){
       callback(null, true);

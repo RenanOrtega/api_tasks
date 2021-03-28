@@ -15,9 +15,7 @@ import responsiblesRoutes from './routes/responsibleRoutes';
 import situationRoutes from './routes/situationRoutes';
 import categoryRoutes from './routes/categoryRoutes';
 
-/* CONF CORS
-
-const whiteList = [
+/*const whiteList = [
   'http://localhost:3000',
   'http://localhost:3001',
 ];
