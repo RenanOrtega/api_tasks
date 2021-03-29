@@ -4,9 +4,8 @@ import User from '../models/User';
 import Task from '../models/Task';
 import Situation from '../models/Situation';
 import Category from '../models/Category';
-import Responsible from '../models/Responsible';
 
-const models = [User, Task, Situation, Category, Responsible];
+const models = [User, Task, Situation, Category];
 
 const connection = new Sequelize(databaseConfig);
 

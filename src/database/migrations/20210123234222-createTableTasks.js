@@ -14,19 +14,7 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: true,
     },
-    id_responsible: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
-    id_category: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
-    id_situation: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
-    dt_delivery: {
+    due_date: {
       type: Sequelize.DATE,
       allowNull: false,
     },

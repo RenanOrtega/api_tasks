@@ -13,10 +13,17 @@ export default class Situation extends Model {
           },
         },
       },
+      id_task:{
+        type: Sequelize.INTEGER
+      }
     }, {
       sequelize,
     });
     return this;
   }
 
+  static associate(models) {
+    this.hasMany(models.Task, {as: 'tasks', foreignKey: 'id_task' });
+
+  }
 }

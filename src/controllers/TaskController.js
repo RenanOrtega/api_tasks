@@ -1,7 +1,4 @@
 import Task from '../models/Task';
-import Category from '../models/Category';
-import Situation from '../models/Situation';
-import Responsible from '../models/Responsible';
 
 class TaskController {
 
