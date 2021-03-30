@@ -27,6 +27,7 @@ export default class Category extends Model {
   }
 
   static associate(models) {
+    this.hasMany(models.Task);
     this.belongsTo(models.User, { as: "users", foreignKey: "id_user" });
   }
 }
