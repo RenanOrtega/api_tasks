@@ -14,7 +14,7 @@ export default class Situation extends Model {
             },
           },
         },
-        id_task: {
+        task_id: {
           type: Sequelize.INTEGER,
         },
       },
@@ -26,6 +26,6 @@ export default class Situation extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Task, { as: "tasks", foreignKey: "id_task" });
+    this.hasMany(models.Task, { foreignKey: "task_id" });
   }
 }
