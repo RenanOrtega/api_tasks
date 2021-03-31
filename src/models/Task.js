@@ -24,14 +24,14 @@ export default class Task extends Model {
             },
           },
         },
-        id_situation: {
+        situation_id: {
           type: Sequelize.INTEGER,
         },
-        id_categoria: {
+        categoria_id: {
           type: Sequelize.INTEGER,
           allowNull: true,
         },
-        dt_delivery: {
+        due_date: {
           type: Sequelize.DATE,
           defaultValue: "",
         },
@@ -44,7 +44,7 @@ export default class Task extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Situation, { foreignKey: "id_situation" });
-    this.belongsTo(models.Category, { foreignKey: "id_categoria" });
+    this.belongsTo(models.Situation, { foreignKey: "situation_id" });
+    this.belongsTo(models.Category, { foreignKey: "categoria_id" });
   }
 }

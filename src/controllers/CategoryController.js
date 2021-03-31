@@ -1,11 +1,15 @@
-import Category from '../models/Category';
+import DataTokenProvider from "../helpers/DataTokenProvider";
+import Category from "../models/Category";
 
 class CategoryController {
-
-  //Store
   async store(req, res) {
     try {
-      const categories = await Category.create(req.body);
+      const dataTokenProvider = new DataTokenProvider();
+
+      const token = dataTokenProvider.getToken(req);
+      const { id: user_id } = dataTokenProvider.getData(token);
+
+      const categories = await Category.create({ user_id, ...req.body });
 
       return res.status(201).json(categories);
     } catch (e) {
@@ -15,38 +19,46 @@ class CategoryController {
     }
   }
 
-  //Index
   async index(req, res) {
     try {
-      const categories = await Category.findAll();
+      const dataTokenProvider = new DataTokenProvider();
+      let { page, pageSize } = req.query;
+
+      const token = dataTokenProvider.getToken(req);
+      const { id: user_id } = dataTokenProvider.getData(token);
+
+      const categories = await Category.findAll({
+        offset: page ? page * pageSize : 0,
+        limit: pageSize ? +pageSize : 5,
+        where: { user_id },
+      });
+
       return res.status(200).json(categories);
     } catch (e) {
-      return res.status(404).json({
-        errors: e.errors.map((err) => err.message),
-      });
+      return res.status(404).json({ errors: e.message });
     }
   }
 
-  //Show
   async show(req, res) {
     try {
       const { id } = req.params;
+      const dataTokenProvider = new DataTokenProvider();
+      const token = dataTokenProvider.getToken(req);
+      const { id: user_id } = dataTokenProvider.getData(token);
 
       if (!id) {
-        return res.status(400).json({
-          errors: ['ID is missing']
+        return res.status(400).json({ errors: ["ID is missing"] });
+      }
+
+      const category = await Category.findByPk(id);
+
+      if (!category || category.user_id !== user_id) {
+        return res.status(404).json({
+          errors: ["This category does not exist to be displayed"],
         });
       }
 
-      const categories = await Category.findByPk(id);
-
-      if (!categories) {
-        return res.status(404).json({
-          errors: ['This category does not exist to be displayed']
-        })
-      }
-
-      return res.status(200).json(categories);
+      return res.status(200).json(category);
     } catch (e) {
       return res.status(404).json({
         errors: e.errors.map((err) => err.message),
@@ -54,23 +66,24 @@ class CategoryController {
     }
   }
 
-  // Update
   async update(req, res) {
     try {
-
       const { id } = req.params;
+      const dataTokenProvider = new DataTokenProvider();
+      const token = dataTokenProvider.getToken(req);
+      const { id: user_id } = dataTokenProvider.getData(token);
 
       if (!id) {
         return res.status(400).json({
-          errors: ['ID is missing']
+          errors: ["ID is missing"],
         });
       }
 
       const categories = await Category.findByPk(id);
 
-      if (!categories) {
+      if (!categories || category.user_id !== user_id) {
         return res.status(404).json({
-          errors: ['This category does not exist to be updated'],
+          errors: ["This category does not exist to be updated"],
         });
       }
 
@@ -83,28 +96,30 @@ class CategoryController {
     }
   }
 
-  // Delete
   async delete(req, res) {
     try {
       const { id } = req.params;
+      const dataTokenProvider = new DataTokenProvider();
+      const token = dataTokenProvider.getToken(req);
+      const { id: user_id } = dataTokenProvider.getData(token);
 
       if (!id) {
         return res.status(400).json({
-          errors: ['ID is missing']
+          errors: ["ID is missing"],
         });
       }
 
       const categories = await Category.findByPk(id);
 
-      if (!categories) {
+      if (!categories || category.user_id !== user_id) {
         return res.status(404).json({
-          errors: ['Category does not exist to be deleted'],
+          errors: ["Category does not exist to be deleted"],
         });
       }
 
       await categories.destroy();
       return res.status(200).json({
-        message: ['Category successfully deleted'],
+        message: ["Category successfully deleted"],
       });
     } catch (e) {
       return res.status(400).json({
@@ -112,7 +127,6 @@ class CategoryController {
       });
     }
   }
-
 }
 
 export default new CategoryController();

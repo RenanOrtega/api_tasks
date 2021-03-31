@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn("tasks", "id_situation", {
+    await queryInterface.addColumn("tasks", "situation_id", {
       type: Sequelize.INTEGER,
       references: {
         model: {
@@ -14,7 +14,7 @@ module.exports = {
       onUpdate: "CASCADE",
     });
 
-    await queryInterface.addColumn("situations", "id_task", {
+    await queryInterface.addColumn("situations", "task_id", {
       type: Sequelize.INTEGER,
       references: {
         model: {
@@ -28,7 +28,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn("tasks", "id_situation");
-    await queryInterface.removeColumn("situations", "id_task");
+    await queryInterface.removeColumn("tasks", "situation_id");
+    await queryInterface.removeColumn("situations", "task_id");
   },
 };
