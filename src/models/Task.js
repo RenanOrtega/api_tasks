@@ -27,13 +27,9 @@ export default class Task extends Model {
         situation_id: {
           type: Sequelize.INTEGER,
         },
-        categoria_id: {
-          type: Sequelize.INTEGER,
-          allowNull: true,
-        },
         due_date: {
           type: Sequelize.DATE,
-          defaultValue: "",
+          allowNull: false,
         },
       },
       {
@@ -45,6 +41,5 @@ export default class Task extends Model {
 
   static associate(models) {
     this.belongsTo(models.Situation, { foreignKey: "situation_id" });
-    this.belongsTo(models.Category, { foreignKey: "categoria_id" });
   }
 }

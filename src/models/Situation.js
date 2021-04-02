@@ -4,7 +4,7 @@ export default class Situation extends Model {
   static init(sequelize) {
     super.init(
       {
-        name_situation: {
+        name: {
           type: Sequelize.STRING,
           defaultValue: "",
           validate: {
@@ -14,8 +14,11 @@ export default class Situation extends Model {
             },
           },
         },
-        task_id: {
+        category_id: {
           type: Sequelize.INTEGER,
+        },
+        icon: {
+          type: Sequelize.STRING,
         },
       },
       {
@@ -26,6 +29,7 @@ export default class Situation extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Task, { foreignKey: "task_id" });
+    this.belongsTo(models.Category, { foreignKey: "category_id" });
+    this.hasMany(models.Task);
   }
 }
