@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export default class DataTokenProvider {
-  getToken(req) {
+  static getData(req) {
     const { authorization } = req.headers;
 
     if (!authorization) {
@@ -10,10 +10,6 @@ export default class DataTokenProvider {
 
     const [, token] = authorization.split(" ");
 
-    return token;
-  }
-
-  getData(token) {
     return jwt.verify(token, process.env.TOKEN_SECRET);
   }
 }
