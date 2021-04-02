@@ -13,9 +13,7 @@ export default async (req, res, next) => {
   const [, token] = authorization.split(" ");
 
   try {
-    const dataTokenProvider = new DataTokenProvider();
-
-    const { id, email } = dataTokenProvider.getData(token);
+    const { id, email } = DataTokenProvider.getData(req);
 
     const user = await User.findOne({ where: { id, email } });
 

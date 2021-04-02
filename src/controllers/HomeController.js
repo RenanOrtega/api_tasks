@@ -1,6 +1,6 @@
 class HomeController {
   index(req, res) {
-    res.json('Teste');
+    res.json("GuinanPO-API");
   }
 }
 

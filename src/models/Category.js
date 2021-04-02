@@ -14,6 +14,9 @@ export default class Category extends Model {
             },
           },
         },
+        icon: {
+          type: Sequelize.STRING,
+        },
         user_id: {
           type: Sequelize.INTEGER,
           allowNull: true,
@@ -27,7 +30,7 @@ export default class Category extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Task);
+    this.hasMany(models.Situation);
     this.belongsTo(models.User, { foreignKey: "user_id" });
   }
 }
