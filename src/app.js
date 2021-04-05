@@ -11,7 +11,6 @@ import homeRoutes from './routes/homeRoutes';
 import userRoutes from './routes/userRoutes';
 import tokenRoutes from './routes/tokenRoutes';
 import tasksRoutes from './routes/taskRoutes';
-import responsiblesRoutes from './routes/responsibleRoutes';
 import situationRoutes from './routes/situationRoutes';
 import categoryRoutes from './routes/categoryRoutes';
 
@@ -50,7 +49,6 @@ class App {
     this.app.use('/users/', userRoutes);
     this.app.use('/tokens/', tokenRoutes);
     this.app.use('/tasks/', tasksRoutes);
-    this.app.use('/responsibles/', responsiblesRoutes);
     this.app.use('/situations/', situationRoutes);
     this.app.use('/categories/', categoryRoutes);
   }

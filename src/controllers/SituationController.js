@@ -1,21 +1,41 @@
-import Situation from '../models/Situation';
+import Situation from "../models/Situation";
 
 class SituationController {
   async store(req, res) {
     try {
+      if (!req.body.category_id) {
+        return res.status(400).json({
+          errors: ["Category ID is missing"],
+        });
+      }
+
       const situations = await Situation.create(req.body);
       return res.status(201).json(situations);
     } catch (e) {
-      return res.status(400).json({
-        errors: e.errors.map((err) => err.message),
-      });
+      console.error(e);
+
+      // return res.status(400).json({
+      //   errors: e.errors.map((err) => err.message),
+      // });
     }
   }
 
-  //Index
   async index(req, res) {
     try {
-      const situations = await Situation.findAll();
+      const { page, pageSize, category_id } = req.query;
+
+      if (!category_id) {
+        return res.status(400).json({
+          errors: ["Category ID is missing"],
+        });
+      }
+
+      const situations = await Situation.findAll({
+        offset: page ? page * pageSize : 0,
+        limit: pageSize ? +pageSize : 5,
+        where: { category_id },
+      });
+
       return res.status(200).json(situations);
     } catch (e) {
       return res.status(404).json({
@@ -27,21 +47,21 @@ class SituationController {
   //Show
   async show(req, res) {
     try {
-        const { id } = req.params;
+      const { id } = req.params;
 
-        if (!id) {
-          return res.status(400).json({
-            errors: ['ID is missing']
-          });
-        }
+      if (!id) {
+        return res.status(400).json({
+          errors: ["ID is missing"],
+        });
+      }
 
-        const situations = await Situation.findByPk(id);
+      const situations = await Situation.findByPk(id);
 
-        if (!situations) {
-          return res.status(404).json({
-            errors: ['This situation does not exist to be displayed']
-          })
-        }
+      if (!situations) {
+        return res.status(404).json({
+          errors: ["This situation does not exist to be displayed"],
+        });
+      }
       return res.status(200).json(situations);
     } catch (e) {
       return res.status(400).json({
@@ -55,19 +75,19 @@ class SituationController {
     try {
       const { id } = req.params;
 
-        if (!id) {
-          return res.status(400).json({
-            errors: ['ID is missing']
-          });
-        }
+      if (!id) {
+        return res.status(400).json({
+          errors: ["ID is missing"],
+        });
+      }
 
-        const situations = await Situation.findByPk(id);
+      const situations = await Situation.findByPk(id);
 
-        if (!situations) {
-          return res.status(404).json({
-            errors: ['This situation does not exist to be updated']
-          })
-        }
+      if (!situations) {
+        return res.status(404).json({
+          errors: ["This situation does not exist to be updated"],
+        });
+      }
 
       const situationsAtt = await situations.update(req.body);
       return res.json(situationsAtt);
@@ -83,23 +103,23 @@ class SituationController {
     try {
       const { id } = req.params;
 
-        if (!id) {
-          return res.status(400).json({
-            errors: ['ID is missing']
-          });
-        }
+      if (!id) {
+        return res.status(400).json({
+          errors: ["ID is missing"],
+        });
+      }
 
-        const situations = await Situation.findByPk(id);
+      const situations = await Situation.findByPk(id);
 
-        if (!situations) {
-          return res.status(404).json({
-            errors: ['This situation does not exist to be deleted']
-          })
-        }
+      if (!situations) {
+        return res.status(404).json({
+          errors: ["This situation does not exist to be deleted"],
+        });
+      }
 
       await situations.destroy();
       return res.status(200).json({
-        message: ['Situation successfully deleted'],
+        message: ["Situation successfully deleted"],
       });
     } catch (e) {
       return res.status(400).json({
